@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub } from "react-icons/fa"
+import { useAuthActions } from "@convex-dev/auth/react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -15,13 +16,19 @@ import { Separator } from "@/components/ui/separator"
 import { SignInFlow } from "../types"
 
 interface SignInCardProps {
-    setState: (state: SignInFlow) => void;
-};
+	setState: (state: SignInFlow) => void
+}
 
-export const SignInCard = ({setState}: SignInCardProps) => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    
+export const SignInCard = ({ setState }: SignInCardProps) => {
+	const { signIn } = useAuthActions()
+
+	const [email, setEmail] = useState("")
+	const [password, setPassword] = useState("")
+
+	const handleProviderSignIn = (value : "github" | "google") => {
+		signIn(value);
+	}
+
 	return (
 		<Card className="w-full h-full p-8">
 			<CardHeader className="px-0 pt-0">
@@ -61,23 +68,29 @@ export const SignInCard = ({setState}: SignInCardProps) => {
 						size="lg"
 						className="w-full relative"
 					>
-                        <FcGoogle className="size-5 absolute left-2.5 top-3" />
+						<FcGoogle className="size-5 absolute left-2.5 top-3" />
 						Continue with Google
 					</Button>
-					<Button 
+					<Button
 						disabled={false}
-						onClick={() => {}}
+						onClick={() => handleProviderSignIn("github")}
 						variant="outline"
 						size="lg"
 						className="w-full relative"
 					>
-                        <FaGithub className="size-5 absolute left-2.5 top-3" />
+						<FaGithub className="size-5 absolute left-2.5 top-3" />
 						Continue with Github
 					</Button>
 				</div>
-                <p className="text-xs text-muted-foreground">
-                    Don&apos;'t have an account? <span onClick={() => setState("signUp")} className="text-sky-700 hover:underline cursor-pointer">Sign Up</span>
-                </p>
+				<p className="text-xs text-muted-foreground">
+					Don&apos;'t have an account?{" "}
+					<span
+						onClick={() => setState("signUp")}
+						className="text-sky-700 hover:underline cursor-pointer"
+					>
+						Sign Up
+					</span>
+				</p>
 			</CardContent>
 		</Card>
 	)
