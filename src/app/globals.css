@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   --background: #ffffff;
   --foreground: #171717;
-}
+} */
 
 @media (prefers-color-scheme: root) {
   :root {
@@ -24,12 +24,6 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-}
-
-html,
-body,
-:root{
-  height: 100%;
 }
 
 @layer base {
@@ -95,4 +89,11 @@ body,
   body {
     @apply bg-background text-foreground;
   }
+}
+
+
+html,
+body,
+:root{
+  height: 100%;
 }
